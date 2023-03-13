@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { Outlet } from 'react-router-dom';
+import { NavLink, Outlet } from 'react-router-dom';
 
 import {
   AppBar,
@@ -16,27 +16,27 @@ const SharedLayout = () => {
       <AppBar position="static" sx={{ display: 'flex' }}>
         <Toolbar component="nav">
           <Box>
-            <Button variant="text" color="secondary" href="/">
-              Phonebook
+            <Button variant="text" color="custom">
+              <NavLink to="/">Phonebook</NavLink>
             </Button>
-            <Button variant="text" color="secondary" href="/contacts">
-              Contacts
+            <Button variant="text" color="custom">
+              <NavLink to="/contacts">Contacts</NavLink>
             </Button>
           </Box>
           <Box sx={{ flexGrow: 1 }} />
           <Box>
-            <Button variant="text" color="secondary" href="/register">
-              Sign up
+            <Button variant="text" color="custom">
+              <NavLink to="/register">Sign up</NavLink>
             </Button>
-            <Button variant="text" color="secondary" href="/login">
-              Log in
+            <Button variant="text" color="custom">
+              <NavLink to="/login">Log in</NavLink>
             </Button>
           </Box>
         </Toolbar>
       </AppBar>
-      <Suspense fallback={<LinearProgress />}>
+      {/* <Suspense fallback={<LinearProgress />}>
         <Outlet />
-      </Suspense>
+      </Suspense> */}
     </Container>
   );
 };

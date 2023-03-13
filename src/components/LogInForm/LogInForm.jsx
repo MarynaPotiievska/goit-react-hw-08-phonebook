@@ -4,10 +4,10 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
-import { signUp } from 'redux/auth/operations';
+import { logIn } from 'redux/auth/operations';
 
 import { Box } from '@mui/system';
-import { TextField } from '@mui/material';
+import { Button, TextField } from '@mui/material';
 
 const registerSchema = yup.object().shape({
   email: yup.string().email('Email is invalid').required('Email is required'),
@@ -33,10 +33,9 @@ const LogInForm = () => {
     setValues(value);
   };
 
-  const handleFormSubmit = (e, values) => {
-    const form = e.target;
-    dispatch(signUp(values));
-    form.reset();
+  const handleFormSubmit = values => {
+    dispatch(logIn(values));
+    setValues(initialValues);
   };
 
   const {
@@ -76,6 +75,7 @@ const LogInForm = () => {
         value={values.password}
         onChange={e => handleChange({ ...values, password: e.target.value })}
       />
+      <Button type="submit">Submit</Button>
     </Box>
   );
 };

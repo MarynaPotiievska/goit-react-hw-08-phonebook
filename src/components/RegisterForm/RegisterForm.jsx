@@ -7,7 +7,7 @@ import * as yup from 'yup';
 import { signUp } from 'redux/auth/operations';
 
 import { Box } from '@mui/system';
-import { TextField } from '@mui/material';
+import { Button, TextField } from '@mui/material';
 
 const registerSchema = yup.object().shape({
   name: yup
@@ -21,10 +21,10 @@ const registerSchema = yup.object().shape({
   email: yup.string().email('Email is invalid').required('Email is required'),
   password: yup
     .string()
-    .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{6,12}$/,
-      'Password must consist of 6-12 characters including at least 1 uppercase, 1 lowercase, 1 number and 1 symbol (!@#$%^&*_=+-)'
-    )
+    // .matches(
+    //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{6,12}$/,
+    //   'Password must consist of 6-12 characters including at least 1 uppercase, 1 lowercase, 1 number and 1 symbol (!@#$%^&*_=+-)'
+    // )
     .required('Password is required'),
 });
 
@@ -36,16 +36,18 @@ const initialValues = {
 
 const RegisterForm = () => {
   const [values, setValues] = useState(initialValues);
+  // const [error, setError] = useState(null);
   const dispatch = useDispatch();
 
   const handleChange = value => {
     setValues(value);
   };
 
-  const handleFormSubmit = (e, values) => {
-    const form = e.target;
+  const handleFormSubmit = values => {
+    console.log('values', values);
     dispatch(signUp(values));
-    form.reset();
+    // setError(state => state.auth.error);
+    setValues(initialValues);
   };
 
   const {
@@ -59,6 +61,9 @@ const RegisterForm = () => {
   return (
     <Box
       component="form"
+      sx={{
+        '& .MuiTextField-root': { display: 'block', m: 1, width: '25ch' },
+      }}
       autoComplete="off"
       name="Register Form"
       onSubmit={handleSubmit(handleFormSubmit)}
@@ -66,8 +71,10 @@ const RegisterForm = () => {
       <TextField
         name="name"
         label="User name"
+        id="user-name"
         placeholder="Rob Stark"
         required
+        autoFocus
         {...register('name')}
         error={errors.name ? true : false}
         helperText={errors.name?.message}
@@ -77,6 +84,8 @@ const RegisterForm = () => {
       <TextField
         name="email"
         label="User email"
+        type="email"
+        id="user-email"
         placeholder="mail@mail.com"
         required
         {...register('email')}
@@ -88,6 +97,7 @@ const RegisterForm = () => {
       <TextField
         name="password"
         label="User password"
+        type="password"
         placeholder="******"
         required
         {...register('password')}
@@ -96,6 +106,7 @@ const RegisterForm = () => {
         value={values.password}
         onChange={e => handleChange({ ...values, password: e.target.value })}
       />
+      <Button type="submit">Submit</Button>
     </Box>
   );
 };
