@@ -1,14 +1,6 @@
-import { Suspense } from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
-import {
-  AppBar,
-  Box,
-  Button,
-  Container,
-  LinearProgress,
-  Toolbar,
-} from '@mui/material';
+import { AppBar, Box, Button, Container, Toolbar } from '@mui/material';
 
 const SharedLayout = () => {
   return (
@@ -34,9 +26,6 @@ const SharedLayout = () => {
           </Box>
         </Toolbar>
       </AppBar>
-      {/* <Suspense fallback={<LinearProgress />}>
-        <Outlet />
-      </Suspense> */}
     </Container>
   );
 };
