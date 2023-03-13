@@ -3,16 +3,16 @@ import { lazy } from 'react';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 
-import { PrivateRoute, RestrictedRoute } from './RestrictedAndPrivatRoutes';
+import { RestrictedRoute } from './RestrictedRoute';
+import { PrivateRoute } from './PrivatRoute';
 import { refreshUser } from 'redux/auth/operations';
 import { useAuth } from 'hooks';
+import SharedLayout from './SharedLayout';
 
 const Home = lazy(() => import('pages/Home'));
 const LogIn = lazy(() => import('pages/LogIn'));
 const Register = lazy(() => import('pages/Register'));
 const Contacts = lazy(() => import('pages/Contacts'));
-
-const SharedLayout = lazy(() => import('components/SharedLayout'));
 
 export const App = () => {
   const dispatch = useDispatch();
