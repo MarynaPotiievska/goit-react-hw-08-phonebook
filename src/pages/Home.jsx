@@ -5,14 +5,17 @@ const Home = () => {
   return (
     <main>
       <Typography
-        variant="h1"
+        variant="h2"
         color="primary"
-        sx={{ textAlign: 'center', mb: '16px' }}
+        sx={{ textAlign: 'center', mb: '16px', pt: '120px' }}
       >
         Welcome to the Phonebook!
-        <MoodIcon color="primary" />
+        <MoodIcon color="primary" fontSize="large" />
       </Typography>
-      <Typography variant="h1" sx={{ textAlign: 'center' }}>
+      <Typography
+        variant="subtitle1"
+        sx={{ textAlign: 'center', fontWeight: 'bold' }}
+      >
         Please, register or log in.
       </Typography>
     </main>
