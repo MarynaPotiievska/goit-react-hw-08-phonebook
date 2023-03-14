@@ -2,7 +2,6 @@ import { List } from '@mui/material';
 import ContactListItem from 'components/ContactListItem';
 import { useSelector } from 'react-redux';
 
-// import { List } from './ContactList.styled';
 import { selectFilteredContacts } from 'redux/selectors';
 
 const ContactList = () => {
