@@ -23,15 +23,13 @@ const authSlice = createSlice({
         state.token = null;
         state.isLoggedIn = false;
       })
-      .addCase(refreshUser.fulfilled, (state, { payload }) => {
-        console.log(payload);
+      .addCase(refreshUser.fulfilled, (state, { payload }) => {        
         state.user = payload;
         state.isLoggedIn = true;
         state.isRefreshing = false;
       })
       .addCase(refreshUser.pending, state => {state.isRefreshing = true})
-      .addCase(refreshUser.rejected, state => {state.isRefreshing = false})
-      // .addCase(signUp.rejected, state => (state.error = true))
+      .addCase(refreshUser.rejected, state => {state.isRefreshing = false})      
       .addMatcher(isAnyOf(...getActions('fulfilled')), (state, { payload }) => {
         state.user = payload.user;
         state.token = payload.token;

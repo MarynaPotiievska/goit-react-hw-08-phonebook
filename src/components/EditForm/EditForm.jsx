@@ -2,38 +2,22 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
-import 'yup-phone';
 
-import { addContact } from 'redux/contactsOperations';
+import { editContact } from 'redux/contactsOperations';
 import { selectContacts } from 'redux/selectors';
+import { contactSchema } from 'components/ContactForm/ContactForm';
 
 import { Box } from '@mui/system';
 import { Button, TextField } from '@mui/material';
-
-export const contactSchema = yup.object().shape({
-  name: yup
-    .string()
-    .min(2, 'Name must be at least 2 characters')
-    .matches(
-      /^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/,
-      "Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-    )
-    .required('Name is required'),
-  number: yup
-    .string()
-    .phone('UA', 'Number must be a valid phone number for region UA.')
-    .required('Phone is required'),
-});
 
 const initialValues = {
   name: '',
   number: '',
 };
 
-const ContactForm = () => {
+const EditForm = () => {
   const [values, setValues] = useState(initialValues);
-  const contacts = useSelector(selectContacts);
+  //   const contacts = useSelector(selectContacts);
   const dispatch = useDispatch();
 
   const handleChange = value => {
@@ -41,15 +25,7 @@ const ContactForm = () => {
   };
 
   const handleFormSubmit = values => {
-    const isInContacts = contacts.find(
-      contact => contact.name.toLowerCase() === values.name.toLowerCase()
-    );
-    if (isInContacts === undefined) {
-      dispatch(addContact(values));
-    } else {
-      alert(`${values.name} is already in contacts.`);
-    }
-    setValues(initialValues);
+    dispatch(editContact(values));
   };
 
   const {
@@ -64,7 +40,7 @@ const ContactForm = () => {
     <Box
       component="form"
       autoComplete="off"
-      name="Add Contact Form"
+      name="Edit Contact Form"
       onSubmit={handleSubmit(handleFormSubmit)}
       sx={{
         width: '700px',
@@ -115,4 +91,4 @@ const ContactForm = () => {
   );
 };
 
-export default ContactForm;
+export default EditForm;
