@@ -1,23 +1,19 @@
-import { useDispatch, useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { editContact } from 'redux/contactsOperations';
-import { selectContacts } from 'redux/selectors';
 import { contactSchema } from 'components/ContactForm/ContactForm';
 
 import { Box } from '@mui/system';
 import { Button, TextField } from '@mui/material';
 
-const initialValues = {
-  name: '',
-  number: '',
-};
+const EditForm = ({ contact, setOpen }) => {
+  const { id, name, number } = contact;
 
-const EditForm = () => {
-  const [values, setValues] = useState(initialValues);
-  //   const contacts = useSelector(selectContacts);
+  const [values, setValues] = useState({ name, number });
   const dispatch = useDispatch();
 
   const handleChange = value => {
@@ -25,7 +21,9 @@ const EditForm = () => {
   };
 
   const handleFormSubmit = values => {
-    dispatch(editContact(values));
+    const contactData = { id, name: values.name, number: values.number };
+    dispatch(editContact(contactData));
+    setOpen(false);
   };
 
   const {
@@ -43,7 +41,7 @@ const EditForm = () => {
       name="Edit Contact Form"
       onSubmit={handleSubmit(handleFormSubmit)}
       sx={{
-        width: '700px',
+        width: '650px',
         margin: '0 auto',
         display: 'flex',
         alignItems: 'center',
@@ -52,7 +50,7 @@ const EditForm = () => {
         border: `1px solid #093C01`,
         borderRadius: '4px',
         mb: '16px',
-        padding: '24px',
+        padding: '8px',
         '& .MuiTextField-root': { display: 'block', m: 0.5, width: '25ch' },
       }}
     >
@@ -85,10 +83,19 @@ const EditForm = () => {
         variant="contained"
         sx={{ margin: '0 auto', width: '25ch' }}
       >
-        Add contact
+        Edit
       </Button>
     </Box>
   );
+};
+
+EditForm.propTypes = {
+  contact: PropTypes.exact({
+    id: PropTypes.string,
+    name: PropTypes.string,
+    number: PropTypes.string,
+  }),
+  setOpen: PropTypes.func,
 };
 
 export default EditForm;
